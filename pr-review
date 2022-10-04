@@ -52,6 +52,7 @@ command = [
   '--input -',
 ].join(' ')
 
+puts "Repo: #{repo}"
 puts "PR number: #{pull_number}"
 puts "Adding reviewers: #{reviewers}"
 
