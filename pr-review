@@ -36,6 +36,15 @@ print 'Repo? (default: payroll) '
 repo = $stdin.gets.chomp
 repo = 'payroll' if repo.empty?
 
+puts "Repo: #{repo}"
+puts "PR number: #{pull_number}"
+puts "Adding reviewers: #{reviewers}"
+
+print 'Continue? (y/n) '
+confirmed = $stdin.gets.chomp
+
+exit unless confirmed.downcase == 'y'
+
 pr_url = "/repos/#{owner}/#{repo}/pulls/#{pull_number}"
 
 # See: https://docs.github.com/en/rest/pulls/review-requests
@@ -52,14 +61,5 @@ command = [
   '--method POST',
   '--input -',
 ].join(' ')
-
-puts "Repo: #{repo}"
-puts "PR number: #{pull_number}"
-puts "Adding reviewers: #{reviewers}"
-
-print 'Continue? (y/n) '
-confirmed = $stdin.gets.chomp
-
-exit unless confirmed.downcase == 'y'
 
 system(command)
