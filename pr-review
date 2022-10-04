@@ -25,16 +25,16 @@ reviewers = [
 pull_number = ARGV.first
 
 if pull_number.nil?
-  puts "Pass in a pull request number."
+  puts 'Pass in a pull request number.'
   exit
 end
 
 owner = 'squareup'
 repo = 'payroll'
-pr_url ="/repos/#{owner}/#{repo}/pulls/#{pull_number}"
+pr_url = "/repos/#{owner}/#{repo}/pulls/#{pull_number}"
 
 # See: https://docs.github.com/en/rest/pulls/review-requests
-reviewers_url ="#{pr_url}/requested_reviewers"
+reviewers_url = "#{pr_url}/requested_reviewers"
 
 payload = {
   reviewers: reviewers,
@@ -44,15 +44,15 @@ command = [
   "jq -n '#{payload.to_json}' | ",
   "gh api --header 'Accept: application/vnd.github.v3+json'",
   reviewers_url,
-  "--method POST",
-  "--input -",
+  '--method POST',
+  '--input -',
 ].join(' ')
 
 puts "PR number: #{pull_number}"
 puts "Adding reviewers: #{reviewers}"
 
 print 'Continue? (y/n) '
-confirmed = STDIN.gets.chomp
+confirmed = $stdin.gets.chomp
 
 exit unless confirmed.downcase == 'y'
 
