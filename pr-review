@@ -30,7 +30,11 @@ if pull_number.nil?
 end
 
 owner = 'squareup'
-repo = 'payroll'
+
+print 'Repo? (default: payroll) '
+repo = $stdin.gets.chomp
+repo = 'payroll' if repo.empty?
+
 pr_url = "/repos/#{owner}/#{repo}/pulls/#{pull_number}"
 
 # See: https://docs.github.com/en/rest/pulls/review-requests
