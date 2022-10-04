@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+# Usage: pr-review <pull-request-number>
+
+# Set up:
+# 1. Install the Github CLI tool (https://github.com/cli/cli#installation)
+# 2. (Optional) Verify that the `gh` command works (https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api)
+# 3. (Optional) Modify the `reviewers` variable as desired
+# 4. Run this file/command: pr-review <pull-request-number>
+
+require 'json'
+
+reviewers = [
+  'aivener',
+  'allisongu',
+  'amberdixon',
+  'cstead-square',
+  # 'james-square',
+  'jtorreggiani',
+  'leilanilumen',
+  'lmasters-square',
+  'vivian-c',
+]
+
+pull_number = ARGV.first
+
+if pull_number.nil?
+  puts "Pass in a pull request number."
+  exit
+end
+
+owner = 'squareup'
+repo = 'payroll'
+pr_url ="/repos/#{owner}/#{repo}/pulls/#{pull_number}"
+
+# See: https://docs.github.com/en/rest/pulls/review-requests
+reviewers_url ="#{pr_url}/requested_reviewers"
+
+payload = {
+  reviewers: reviewers,
+}
+
+command = [
+  "jq -n '#{payload.to_json}' | ",
+  "gh api --header 'Accept: application/vnd.github.v3+json'",
+  reviewers_url,
+  "--method POST",
+  "--input -",
+].join(' ')
+
+puts "PR number: #{pull_number}"
+puts "Adding reviewers: #{reviewers}"
+
+print 'Continue? (y/n) '
+confirmed = STDIN.gets.chomp
+
+exit unless confirmed.downcase == 'y'
+
+system(command)
