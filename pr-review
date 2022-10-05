@@ -4,7 +4,8 @@
 
 # Set up:
 # 1. Install the Github CLI tool (https://github.com/cli/cli#installation)
-# 2. (Optional) Verify that the `gh` command works (https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api)
+# 2. Verify that the `gh` command works (https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api)
+#    Choose github.com (not Github Enterprise)
 # 3. (Optional) Modify the `reviewers` variable as desired
 # 4. Run this file/command: pr-review <pull-request-number>
 
